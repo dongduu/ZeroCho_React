@@ -1,5 +1,7 @@
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <title>구구단</title>
     <script
       crossorigin
       src="https://unpkg.com/react@17/umd/react.development.js"
@@ -14,38 +16,58 @@
     <div id="root"></div>
 
     <script type="text/babel">
-      class LikeButton extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {
-            liked: false,
-          };
-        }
+      class Gugudan extends React.Component {
+        state = {
+          first: Math.ceil(Math.random() * 9),
+          second: Math.ceil(Math.random() * 9),
+          value: "",
+          result: "",
+        };
 
         render() {
           return (
-            <button
-              type="submit"
-              onClick={() => {
-                this.setState({ liked: true });
-              }}
-            >
-              {this.state.liked === true ? "Liked" : "Like"}
-            </button>
-          ); // JSX( JS + XML )
+            <>
+              <div>
+                {this.state.first} 곱하기 {this.state.second}는?
+              </div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (
+                    parseInt(this.state.value) ===
+                    this.state.first * this.state.second
+                  ) {
+                    this.setState({
+                      result: `${
+                        this.state.first * this.state.second
+                      } 정답! 축하합니다!`,
+                      first: Math.ceil(Math.random() * 9),
+                      second: Math.ceil(Math.random() * 9),
+                      value: "",
+                    });
+                  } else {
+                    this.setState({
+                      result: "땡! 다시 풀어보세요!",
+                      value: "",
+                    });
+                  }
+                }}
+              >
+                <input
+                  type="number"
+                  value={this.state.value}
+                  onChange={(e) => this.setState({ value: e.target.value })}
+                />
+                <button type="submit">입력</button>
+              </form>
+              <div>{this.state.result}</div>
+            </>
+          );
         }
       }
     </script>
     <script type="text/babel">
-      ReactDOM.render(
-        <>
-          <LikeButton />
-          <LikeButton />
-          <LikeButton />
-          <LikeButton />
-        </>,
-        document.querySelector("#root")
-      );
+      ReactDOM.render(<Gugudan />, document.querySelector("#root"));
     </script>
   </body>
 </html>
