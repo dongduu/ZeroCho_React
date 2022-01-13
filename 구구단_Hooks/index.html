@@ -50,7 +50,12 @@
               {first} 곱하기 {second}는?
             </div>
             <form onSubmit={onSubmitForm}>
-              <input ref={inputRef} value={value} onChange={onChangeInput} />
+              <input
+                ref={inputRef}
+                value={value}
+                onChange={onChangeInput}
+                type="number"
+              />
               <button>입력</button>
             </form>
             <div id="result">{result}</div>
