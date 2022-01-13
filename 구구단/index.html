@@ -24,6 +24,12 @@
           result: "",
         };
 
+        input;
+
+        onRefInput = (c) => {
+          this.input = c;
+        };
+
         render() {
           return (
             <>
@@ -37,23 +43,26 @@
                     parseInt(this.state.value) ===
                     this.state.first * this.state.second
                   ) {
-                    this.setState({
-                      result: `${
-                        this.state.first * this.state.second
-                      } 정답! 축하합니다!`,
-                      first: Math.ceil(Math.random() * 9),
-                      second: Math.ceil(Math.random() * 9),
-                      value: "",
+                    this.setState((prevState) => {
+                      return {
+                        result: `${prevState.value} 정답! 축하합니다!`,
+                        first: Math.ceil(Math.random() * 9),
+                        second: Math.ceil(Math.random() * 9),
+                        value: "",
+                      };
                     });
+                    this.input.focus();
                   } else {
                     this.setState({
                       result: "땡! 다시 풀어보세요!",
                       value: "",
                     });
+                    this.input.focus();
                   }
                 }}
               >
                 <input
+                  ref={this.onRefInput}
                   type="number"
                   value={this.state.value}
                   onChange={(e) => this.setState({ value: e.target.value })}
