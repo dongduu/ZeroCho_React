@@ -1,58 +1,45 @@
 const React = require("react");
-const { Component } = React;
+const { useState, useRef, Component } = React;
 
-class WordRelay extends Component {
-  state = {
-    word: "리액트",
-    value: "",
-    result: "",
-  };
+const WordRelay = () => {
+  const [word, setWord] = useState("이동주");
+  const [value, setValue] = useState("");
+  const [result, setResult] = useState("");
+  const inputRef = useRef(null);
 
-  onSubmitForm = (e) => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
-    if (this.state.word[this.state.word.length - 1] === this.state.value[0]) {
-      this.setState({
-        result: "딩동댕",
-        word: this.state.value,
-        value: "",
-      });
-      this.input.focus();
+    if (word[word.length - 1] === value[0]) {
+      setValue("");
+      setResult("딩동댕");
+      setWord(value);
+      inputRef.current.focus();
     } else {
-      this.setState({
-        result: "땡",
-        value: "",
-      });
-      this.input.focus();
+      setValue("");
+      setResult("땡");
+      inputRef.current.focus();
     }
   };
 
-  input;
-
-  onRefInput = (c) => {
-    this.input = c;
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
   };
 
-  onChangeInput = (e) => {
-    this.setState({ value: e.target.value });
-  };
-
-  render() {
-    return (
-      <>
-        <div>{this.state.word}</div>
-        <form onSubmit={this.onSubmitForm}>
-          <input
-            ref={this.onRefInput}
-            value={this.state.value}
-            onChange={this.onChangeInput}
-            // type="string"
-          />
-          <button>입력</button>
-        </form>
-        <div>{this.state.result}</div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div>{word}</div>
+      <form onSubmit={onSubmitForm}>
+        <input
+          ref={inputRef}
+          value={value}
+          onChange={onChangeInput}
+          type="string"
+        />
+        <button>입력</button>
+      </form>
+      <div>{result}</div>
+    </>
+  );
+};
 
 module.exports = WordRelay;
