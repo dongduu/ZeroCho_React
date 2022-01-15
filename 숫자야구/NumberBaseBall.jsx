@@ -34,11 +34,24 @@ class NumberBaseBall extends Component {
         </form>
         <div>시도: {this.state.tries.length}</div>
         <ul>
-          {
-            (["배", "바나나", "사과"].map = (v) => {
-              return <li>{v}</li>;
-            })
-          }
+          {[
+            { fruit: "배", taste: "맛없다" },
+            { fruit: "바나나", taste: "맛있다" },
+            { fruit: "사과", taste: "달다" },
+          ].map((v) => (
+            <li key={v.fruit + v.taste}>
+              <b>{v.fruit}</b> - {v.taste}
+            </li>
+          ))}
+          {/* <li>
+            <b>배</b> - 맛없다
+          </li>
+          <li>
+            <b>바나나</b> - 맛있다
+          </li>
+          <li>
+            <b>사과</b> - 달다
+          </li> */}
         </ul>
       </>
     );
