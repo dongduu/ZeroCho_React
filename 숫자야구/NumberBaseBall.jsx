@@ -1,5 +1,5 @@
 const React = require("react");
-const { useState, useRef, Component } = React;
+const { useState, useRef, memo } = React;
 const Try = require("./Try");
 
 function getNumbers() {
@@ -12,7 +12,7 @@ function getNumbers() {
   return array;
 }
 
-const NumberBaseBall = () => {
+const NumberBaseBall = memo(() => {
   const [result, setResult] = useState("");
   const [value, setValue] = useState("");
   const [answer, setAnswer] = useState(getNumbers());
@@ -85,6 +85,6 @@ const NumberBaseBall = () => {
       </ul>
     </>
   );
-};
+});
 
 module.exports = NumberBaseBall;
