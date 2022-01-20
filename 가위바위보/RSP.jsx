@@ -5,6 +5,18 @@ import React, { Component } from "react";
 // (setState, props 바뀔 때) => shouldComponentUpdate(true) -> render -> componentDidUpdate
 // (부모가 나를 없앴을 때) => componentWillUnmount -> 소멸
 
+const rspCoords = {
+  바위: "0",
+  가위: "-142px",
+  보: "-284px",
+};
+
+const scores = {
+  가위: 1,
+  바위: 0,
+  보: -1,
+};
+
 class RSP extends Component {
   state = {
     result: "",
@@ -12,8 +24,27 @@ class RSP extends Component {
     score: 0,
   };
 
+  interval;
+
   componentDidMount() {
-    // 컴포넌트가 첫 랜더링된 후
+    // 컴포넌트가 첫 랜더링된 후, 비동기 요청을 많이 함
+
+    this.interval = setInterval(() => {
+      const { imgCoord } = this.state; // 클로저 문제 주의!
+      if (imgCoord === rspCoords.바위) {
+        this.setState({
+          imgCoord: rspCoords.가위,
+        });
+      } else if (imgCoord === rspCoords.가위) {
+        this.setState({
+          imgCoord: rspCoords.보,
+        });
+      } else if (imgCoord === rspCoords.보) {
+        this.setState({
+          imgCoord: rspCoords.바위,
+        });
+      }
+    }, 1000);
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContent) {
@@ -26,8 +57,11 @@ class RSP extends Component {
   }
 
   componentWillUnmount() {
-    // 컴포넌트가 제거되기 직전
+    // 컴포넌트가 제거되기 직전, 비동기 요청 정리를 많이 함
+    clearInterval(this.interval);
   }
+
+  onClickBtn = (choice) => {};
 
   render() {
     const { result, score, imgCoord } = this.state;
@@ -44,7 +78,7 @@ class RSP extends Component {
             id="rock"
             className="btn"
             onClick={() => {
-              onClickBtn("바위");
+              this.onClickBtn("바위");
             }}
           >
             바위
@@ -53,7 +87,7 @@ class RSP extends Component {
             id="scissor"
             className="btn"
             onClick={() => {
-              onClickBtn("가위");
+              this.onClickBtn("가위");
             }}
           >
             가위
@@ -62,7 +96,7 @@ class RSP extends Component {
             id="paper"
             className="btn"
             onClick={() => {
-              onClickBtn("보");
+              this.onClickBtn("보");
             }}
           >
             보
