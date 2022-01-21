@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 // 컴포넌트의 라이프 사이클 (클래스의 경우)
 // consturctor -> render -> ref -> componentDidMount
@@ -23,22 +23,20 @@ const computerChoice = (imgCoord) => {
   })[0];
 };
 
-class RSP extends Component {
+class RSP extends PureComponent {
   state = {
     result: "",
-    imgCoord: 0,
+    imgCoord: rspCoords.바위,
     score: 0,
   };
 
   interval;
 
   componentDidMount() {
-    // 컴포넌트가 첫 랜더링된 후, 비동기 요청을 많이 함
-    this.interval = setInterval(this.changeHand, 1000);
+    this.interval = setInterval(this.changeHand, 100);
   }
 
   componentWillUnmount() {
-    // 컴포넌트가 제거되기 직전, 비동기 요청 정리를 많이 함
     clearInterval(this.interval);
   }
 
@@ -85,7 +83,7 @@ class RSP extends Component {
       });
     }
     setTimeout(() => {
-      this.interval = setInterval(this.changeHand, 1000);
+      this.interval = setInterval(this.changeHand, 100);
     }, 2000);
   };
 
