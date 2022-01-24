@@ -1,5 +1,14 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import Ball from "./Ball";
+
+// useMemo는 함수 값을 기억
+// useCallback는 함수 자체를 기억, 자식 컴포넌트에 함수를 넘길 떄는 꼭 해주어야 함
 
 const getNumbers = () => {
   console.log("getNumbers");
@@ -43,13 +52,14 @@ const Lotto = () => {
   }, [timeouts.current]); // input이 빈 배열이면 componentDidMount와 같음
   // 배열에 요소가 있으면 componentDidMount와 componentDidUpdate 모두 수행
 
-  const onClickRedo = () => {
+  const onClickRedo = useCallback(() => {
+    console.log(winNumbers);
     setWinNumbers(getNumbers());
     setWinBalls([]);
     setBonus(null);
     setRedo(false);
     timeouts.current = [];
-  };
+  }, [winNumbers]);
 
   return (
     <>
