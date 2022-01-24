@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Ball from "./Ball";
 
 function getWinNumbers() {
@@ -17,7 +17,7 @@ function getWinNumbers() {
   return [...winNumbers, bonusNumber];
 }
 
-class Lotto extends Component {
+class Lotto extends PureComponent {
   state = {
     winNumbers: getWinNumbers(), // 당첨 숫자들
     winBalls: [],
@@ -27,7 +27,8 @@ class Lotto extends Component {
 
   timeouts = [];
 
-  componentDidMount() {
+  runTimeouuts = () => {
+    console.log("runtimeout");
     const { winNumbers } = this.state;
     for (let i = 0; i < winNumbers.length - 1; i++) {
       this.timeouts[i] = setTimeout(() => {
@@ -44,6 +45,18 @@ class Lotto extends Component {
         redo: true,
       });
     }, 7000);
+  };
+
+  componentDidMount() {
+    console.log("didmount");
+    this.runTimeouuts();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("didupdate");
+    if (this.state.winBalls.length === 0) {
+      this.runTimeouuts();
+    }
   }
 
   componentWillUnmount() {
@@ -53,7 +66,13 @@ class Lotto extends Component {
   }
 
   onClickRedo = () => {
-    return null;
+    this.setState({
+      winNumbers: getWinNumbers(), // 당첨 숫자들
+      winBalls: [],
+      bonus: null, // 보너스 공
+      redo: false,
+    });
+    this.timeouts = [];
   };
 
   render() {
