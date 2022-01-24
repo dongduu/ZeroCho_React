@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useState, useReducer } from "react";
+import Table from "./Table";
+
+const initialState = {
+  winner: "",
+  turn: "o",
+  tableData: [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ],
+};
+
+const reducer = (state, action) => {};
 
 const TicTacToe = () => {
-  return null;
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  //   const [winner, setWinner] = useState("");
+  //   const [turn, setTurn] = useState("O");
+  //   const [tableData, setTableDate] = useState([
+  //     ["", "", ""],
+  //     ["", "", ""],
+  //     ["", "", ""],
+  //   ]);
+
+  return (
+    <>
+      <Table />
+      {winner && <div>{winner}님의 승리</div>}
+    </>
+  );
 };
 
 export default TicTacToe;
