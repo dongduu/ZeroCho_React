@@ -1,5 +1,7 @@
 import React from "react";
 
-const Td = () => {};
+const Td = () => {
+  return <td />;
+};
 
 export default Td;
