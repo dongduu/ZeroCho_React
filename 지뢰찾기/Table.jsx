@@ -6,10 +6,11 @@ const Table = () => {
   const { tableData } = useContext(TableContext);
   return (
     <table>
-      <thead></thead>
-      <tbody>
-        <Tr />
-      </tbody>
+      {Array(tableData.length)
+        .fill()
+        .map((tr, i) => (
+          <Tr />
+        ))}
     </table>
   );
 };
